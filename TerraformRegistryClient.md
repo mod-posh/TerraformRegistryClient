@@ -7,7 +7,6 @@ The `TerraformRegistryClient` is a C# library designed to interact with the Terr
 - List Terraform modules available in the registry.
 - Search for specific modules using a search query.
 - Retrieve detailed information about specific modules.
-- Download specific module versions and fetch version information.
 
 ## Using the Client in C-Sharp
 
