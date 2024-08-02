@@ -41,23 +41,6 @@ else
  throw "Please dotnet tool install DefaultDocumentation.Console -g";
 }
 
-$Global:settings = Get-Content -Path "$($PSScriptRoot)\ado.json" | ConvertFrom-Json;
-foreach ($Name in ($Global:settings | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name))
-{
- $Org = $Global:settings.$Name;
- $ExpirationDate = Get-Date($Org.Expiration);
- $Today = (Get-Date(Get-Date -Format yyyy-MM-dd));
- $DateDiff = New-TimeSpan -Start $Today -End $ExpirationDate;
- if ($DateDiff.TotalDays -le 7)
- {
-  Write-Host -ForegroundColor Red "Warning: $($Org.OrgName) Token Expires : $($Org.Expiration)";
- }
- else
- {
-  Write-Host -ForegroundColor Blue "Info: $($Org.OrgName) Token Expires in $($DateDiff.TotalDays) days"
- }
-}
-
 $gitConfigList =(git config --list)  -split '\n';
 $gitConfig = @{};
 foreach ($str in $gitConfigList) {
