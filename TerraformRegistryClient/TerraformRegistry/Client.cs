@@ -4,12 +4,22 @@ using System.Text.Json;
 
 namespace ModPosh.TerraformRegistry
 {
+    /// <summary>
+    /// Client for interacting with the Terraform Registry API.
+    /// </summary>
     public class Client
     {
         private readonly HttpClient httpClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Client"/> class with the default base address.
+        /// </summary>
         public Client() : this(null) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Client"/> class with a specified base address.
+        /// </summary>
+        /// <param name="baseAddress">The base address of the Terraform Registry API. If null, defaults to "https://registry.terraform.io/v1/".</param>
         public Client(string? baseAddress = null)
         {
             httpClient = new HttpClient
@@ -19,7 +29,14 @@ namespace ModPosh.TerraformRegistry
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        // Generalized method to handle GET requests and deserialize the response
+        /// <summary>
+        /// Sends a GET request to the specified URL and deserializes the JSON response to a specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to which the JSON response will be deserialized.</typeparam>
+        /// <param name="url">The URL to send the GET request to.</param>
+        /// <returns>The deserialized response of type <typeparamref name="T"/>.</returns>
+        /// <exception cref="HttpRequestException">Thrown when the HTTP request fails.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when deserialization fails or returns null.</exception>
         private async Task<T> GetAsync<T>(string url)
         {
             try
@@ -59,7 +76,11 @@ namespace ModPosh.TerraformRegistry
             }
         }
 
-        // Helper method to build query strings
+        /// <summary>
+        /// Builds a query string from the provided parameters.
+        /// </summary>
+        /// <param name="parameters">A list of key-value pairs representing query parameters.</param>
+        /// <returns>A query string starting with '?' if parameters are provided; otherwise, an empty string.</returns>
         private string BuildQueryString(params (string Key, string? Value)[] parameters)
         {
             var queryParams = parameters
@@ -70,6 +91,14 @@ namespace ModPosh.TerraformRegistry
             return queryParams.Count > 0 ? $"?{string.Join("&", queryParams)}" : string.Empty;
         }
 
+        /// <summary>
+        /// Lists modules available in the Terraform Registry.
+        /// </summary>
+        /// <param name="moduleNamespace">The namespace of the modules to list. If null, lists all modules.</param>
+        /// <param name="offset">The offset for pagination.</param>
+        /// <param name="provider">The provider to filter modules by.</param>
+        /// <param name="verified">Whether to filter by verified modules.</param>
+        /// <returns>A <see cref="ListModulesResponse"/> containing the list of modules.</returns>
         public Task<ListModulesResponse> ListModulesAsync(string? moduleNamespace = null, int? offset = null, string? provider = null, bool? verified = null)
         {
             var queryString = BuildQueryString(
@@ -83,6 +112,14 @@ namespace ModPosh.TerraformRegistry
             return GetAsync<ListModulesResponse>(url);
         }
 
+        /// <summary>
+        /// Searches for modules in the Terraform Registry.
+        /// </summary>
+        /// <param name="searchString">The search string to query modules.</param>
+        /// <param name="offset">The offset for pagination.</param>
+        /// <param name="provider">The provider to filter modules by.</param>
+        /// <param name="verified">Whether to filter by verified modules.</param>
+        /// <returns>A <see cref="ListModulesResponse"/> containing the search results.</returns>
         public Task<ListModulesResponse> SearchModulesAsync(string searchString, int? offset = null, string? provider = null, bool? verified = null)
         {
             var queryString = BuildQueryString(
@@ -96,12 +133,26 @@ namespace ModPosh.TerraformRegistry
             return GetAsync<ListModulesResponse>(url);
         }
 
+        /// <summary>
+        /// Lists the versions of a specific module available in the Terraform Registry.
+        /// </summary>
+        /// <param name="moduleNamespace">The namespace of the module.</param>
+        /// <param name="moduleName">The name of the module.</param>
+        /// <param name="moduleProvider">The provider of the module.</param>
+        /// <returns>A <see cref="ListModuleVersionResponse"/> containing the list of versions.</returns>
         public Task<ListModuleVersionResponse> ListModuleVersionAsync(string moduleNamespace, string moduleName, string moduleProvider)
         {
             var url = $"modules/{moduleNamespace}/{moduleName}/{moduleProvider}/versions";
             return GetAsync<ListModuleVersionResponse>(url);
         }
 
+        /// <summary>
+        /// Lists the latest version of a module provider.
+        /// </summary>
+        /// <param name="moduleNamespace">The namespace of the module.</param>
+        /// <param name="moduleName">The name of the module.</param>
+        /// <param name="offset">The offset for pagination.</param>
+        /// <returns>A <see cref="ListModulesResponse"/> containing the latest version of the module provider.</returns>
         public Task<ListModulesResponse> ListLatestVersionModuleProviderAsync(string moduleNamespace, string moduleName, int? offset = null)
         {
             var queryString = BuildQueryString(
@@ -113,12 +164,27 @@ namespace ModPosh.TerraformRegistry
             return GetAsync<ListModulesResponse>(url);
         }
 
+        /// <summary>
+        /// Retrieves detailed information about a specific module.
+        /// </summary>
+        /// <param name="moduleNamespace">The namespace of the module.</param>
+        /// <param name="moduleName">The name of the module.</param>
+        /// <param name="moduleProvider">The provider of the module.</param>
+        /// <returns>A <see cref="GetModuleResponse"/> containing the module details.</returns>
         public Task<GetModuleResponse> GetModuleAsync(string moduleNamespace, string moduleName, string moduleProvider)
         {
             var url = $"modules/{moduleNamespace}/{moduleName}/{moduleProvider}";
             return GetAsync<GetModuleResponse>(url);
         }
 
+        /// <summary>
+        /// Retrieves detailed information about a specific version of a module.
+        /// </summary>
+        /// <param name="moduleNamespace">The namespace of the module.</param>
+        /// <param name="moduleName">The name of the module.</param>
+        /// <param name="moduleProvider">The provider of the module.</param>
+        /// <param name="moduleVersion">The version of the module to retrieve details for.</param>
+        /// <returns>A <see cref="GetModuleResponse"/> containing the module details for the specified version.</returns>
         public Task<GetModuleResponse> GetModuleAsync(string moduleNamespace, string moduleName, string moduleProvider, string moduleVersion)
         {
             var url = $"modules/{moduleNamespace}/{moduleName}/{moduleProvider}/{moduleVersion}";
