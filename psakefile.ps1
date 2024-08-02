@@ -1,6 +1,6 @@
-$script:ProjectName = "CSharpProject";                                                          # The name of your C# Project
+$script:ProjectName = "TerraformRegistryClient";                                                # The name of your C# Project
 $script:DotnetVersion = "net7.0";                                                               # The version of .Net the project is targeted to
-$script:GithubOrg = 'Org-or-Username'                                                           # This could be your github username if you're not working in a Github Org
+$script:GithubOrg = 'mod-posh'                                                                  # This could be your github username if you're not working in a Github Org
 $script:Repository = "https://github.com/$($script:GithubOrg)";                                 # This is the Github Repo
 $script:DeployBranch = 'main';                                                                  # The branch that we deploy from, typically master or main
 $script:Root = $PSScriptRoot;                                                                   # This will be the root of your Module Project, not the Repository Root
