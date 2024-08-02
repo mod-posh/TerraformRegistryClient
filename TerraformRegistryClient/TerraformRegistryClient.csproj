@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>ModPosh.TerraformRegistry</PackageId>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>ModPosh</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0.0</Version>
+    <Authors>Jeffrey S. Patton</Authors>
+    <Company>Patton-Tech.com</Company>
+    <Description>A Logging library for .Net and PowerShell</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/mod-posh/Logger</RepositoryUrl>
+    <Copyright>2024-08-02</Copyright>
+    <PackageProjectUrl>https://github.com/mod-posh/Logger</PackageProjectUrl>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageReleaseNotes>Version 1.0.0.0 of TerraformRegistryClient</PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+</Project>
