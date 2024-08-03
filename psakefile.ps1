@@ -74,7 +74,7 @@ Task default -depends LocalUse
 Task LocalUse -Description "Setup for local use and testing" -depends Clean, BuildProject
 Task Build -depends LocalUse, TestProject
 Task Package -depends UpdateReadme, CreateDocumentation, PackageProject
-Task Deploy -depends CheckBranch, ReleaseNotes, PublishProject, NewTaggedRelease
+Task Deploy -depends CheckBranch, PublishProject, NewTaggedRelease
 Task Notifications -depends Post2Discord, Post2Bluesky
 
 Task Clean -depends CleanProject {
