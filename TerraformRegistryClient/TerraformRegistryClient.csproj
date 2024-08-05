@@ -14,7 +14,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/mod-posh/Logger</RepositoryUrl>
     <Copyright>2024-08-02</Copyright>
-    <PackageProjectUrl>https://github.com/mod-posh/Logger</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/mod-posh/TerraformRegistryClient</PackageProjectUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageReleaseNotes>Version 1.0.0.0 of TerraformRegistryClient</PackageReleaseNotes>

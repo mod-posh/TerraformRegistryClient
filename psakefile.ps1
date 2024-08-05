@@ -225,9 +225,7 @@ Task TestProject -Description "Test project" -Action {
 }
 
 Task PackageProject -Description "Package the project" -Action {
- $Project = [xml](Get-Content -Path "$($script:Source)\$($script:ProjectName).csproj");
- $Version = $Project.Project.PropertyGroup.Version.ToString();
- dotnet pack $script:Source\$script:ProjectName.sln -o $script:Output -c Release -p:Version=$Version
+ dotnet pack $script:Source\$script:ProjectName.sln -o $script:Output -c Release
 }
 
 Task PublishProject -Description "Publish project to Nuget.org" -Action {
@@ -236,5 +234,6 @@ Task PublishProject -Description "Publish project to Nuget.org" -Action {
  $Version = $Project.Project.PropertyGroup.Version.ToString();
 
  $PackageFile = "$($script:Output)\$($PackageId).$($Version).nupkg"
- dotnet nuget push $PackageFile
+ Write-Host "PackageFile: $($PackageFile)"
+ #dotnet nuget push $PackageFile
 }
