@@ -235,5 +235,5 @@ Task PublishProject -Description "Publish project to Nuget.org" -Action {
 
  $PackageFile = "$($script:Output)\$($PackageId).$($Version).nupkg"
  Write-Host "PackageFile: $($PackageFile)"
- #dotnet nuget push $PackageFile
+ dotnet nuget push $PackageFile
 }
