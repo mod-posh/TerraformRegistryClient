@@ -5,6 +5,34 @@ using System.Text.Json;
 namespace ModPosh.TerraformRegistryClient
 {
     /// <summary>
+    /// Encapsulates connection information required to connect to the Terraform Registry API.
+    /// </summary>
+    public class TerraformRegistryConnectionInfo
+    {
+        /// <summary>
+        /// Gets or sets the base address of the Terraform Registry API.
+        /// </summary>
+        /// <value>
+        /// The base address as a string, typically in the format of a URL.
+        /// </value>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when an attempt is made to set the base address to null.
+        /// </exception>
+        public string BaseAddress { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerraformRegistryConnectionInfo"/> class with the specified base address.
+        /// </summary>
+        /// <param name="baseAddress">The base address of the Terraform Registry API.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="baseAddress"/> is null.
+        /// </exception>
+        public TerraformRegistryConnectionInfo(string baseAddress)
+        {
+            BaseAddress = baseAddress ?? throw new ArgumentNullException(nameof(baseAddress));
+        }
+    }
+    /// <summary>
     /// Client for interacting with the Terraform Registry API.
     /// </summary>
     public class Client
@@ -14,7 +42,25 @@ namespace ModPosh.TerraformRegistryClient
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class with the default base address.
         /// </summary>
-        public Client() : this(null) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Client"/> class with the specified connection information.
+        /// </summary>
+        /// <param name="connectionInfo">The connection information required to connect to the Terraform Registry API.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="connectionInfo"/> is null.</exception>
+        public Client(TerraformRegistryConnectionInfo connectionInfo)
+        {
+            if (connectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(connectionInfo));
+            }
+
+            httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(connectionInfo.BaseAddress)
+            };
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class with a specified base address.
