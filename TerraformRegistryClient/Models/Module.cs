@@ -1,4 +1,4 @@
-﻿namespace ModPosh.Models
+﻿namespace ModPosh.TerraformRegistryClient.Models
 {
     /// <summary>
     /// Represents the base structure of a module, containing the source URL.

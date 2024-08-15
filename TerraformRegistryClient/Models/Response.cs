@@ -1,4 +1,4 @@
-﻿namespace ModPosh.Models
+﻿namespace ModPosh.TerraformRegistryClient.Models
 {
     /// <summary>
     /// Represents the response from the Terraform Registry API when listing modules.

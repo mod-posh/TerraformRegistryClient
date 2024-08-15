@@ -1,4 +1,4 @@
-﻿namespace ModPosh.Models
+﻿namespace ModPosh.TerraformRegistryClient.Models
 {
     /// <summary>
     /// Represents metadata for pagination and navigation in API responses.

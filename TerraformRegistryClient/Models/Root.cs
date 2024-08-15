@@ -1,4 +1,4 @@
-﻿namespace ModPosh.Models
+﻿namespace ModPosh.TerraformRegistryClient.Models
 {
     /// <summary>
     /// Represents the base structure of a root module, containing dependencies and providers.

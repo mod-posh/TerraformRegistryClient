@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ModPosh.Models
+namespace ModPosh.TerraformRegistryClient.Models
 {
     /// <summary>
     /// Represents a version of a Terraform module, including its version number, submodules, root module, and deprecation status.

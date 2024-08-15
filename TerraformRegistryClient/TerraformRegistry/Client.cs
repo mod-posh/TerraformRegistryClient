@@ -1,8 +1,8 @@
-﻿using ModPosh.Models;
+﻿using ModPosh.TerraformRegistryClient.Models;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace ModPosh.TerraformRegistry
+namespace ModPosh.TerraformRegistryClient
 {
     /// <summary>
     /// Client for interacting with the Terraform Registry API.

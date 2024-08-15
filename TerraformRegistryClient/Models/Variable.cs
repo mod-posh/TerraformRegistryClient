@@ -1,4 +1,4 @@
-﻿namespace ModPosh.Models
+﻿namespace ModPosh.TerraformRegistryClient.Models
 {
     /// <summary>
     /// Represents the base structure of a variable in a Terraform module, including common properties such as name and description.
