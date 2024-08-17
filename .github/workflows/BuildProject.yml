@@ -51,8 +51,11 @@ jobs:
       with:
         dotnet-version: '7.0.x'
 
+    - name: Restore dependencies
+      run: dotnet restore ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln
+
     - name: Package
-      run: dotnet pack ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --no-build --output nupkgs
+      run: dotnet pack ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --output nupkgs
 
     - name: Publish NuGet Package
       run: |
