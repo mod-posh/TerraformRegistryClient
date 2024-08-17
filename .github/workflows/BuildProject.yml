@@ -39,7 +39,7 @@ jobs:
       id: set-output
 
   pack_and_publish:
-    needs: [build_and_test, project_operations]
+    needs: [build_and_test]
     if: needs.build_and_test.outputs.should-run == 'true'
     runs-on: windows-latest
 
