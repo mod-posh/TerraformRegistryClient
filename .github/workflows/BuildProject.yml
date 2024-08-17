@@ -35,7 +35,7 @@ jobs:
       run: dotnet test ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --no-build
 
     - name: Set Output
-      run: echo "::set-output name=should-run::true"
+      run: echo "should-run=${{ env.should_run }}" >> $GITHUB_ENV
       id: set-output
 
   pack_and_publish:
@@ -62,5 +62,5 @@ jobs:
 
     - name: Publish NuGet Package
       run: |
-        nuget push **/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+        nuget push **/*.nupkg -ApiKey ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
