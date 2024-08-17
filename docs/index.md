@@ -4,5 +4,5 @@
 
 | Namespaces | |
 | :--- | :--- |
-| [ModPosh.Models](ModPosh.Models.md 'ModPosh.Models') | |
-| [ModPosh.TerraformRegistry](ModPosh.TerraformRegistry.md 'ModPosh.TerraformRegistry') | |
+| [ModPosh.TerraformRegistryClient](ModPosh.TerraformRegistryClient.md 'ModPosh.TerraformRegistryClient') | |
+| [ModPosh.TerraformRegistryClient.Models](ModPosh.TerraformRegistryClient.Models.md 'ModPosh.TerraformRegistryClient.Models') | |
