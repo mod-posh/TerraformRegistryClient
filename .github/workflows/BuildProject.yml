@@ -11,8 +11,6 @@ on:
 jobs:
   build_and_test:
     runs-on: windows-latest
-    outputs:
-      should-run: ${{ steps.set-output.outputs.should-run }}
 
     steps:
     - uses: actions/checkout@v4
@@ -34,13 +32,9 @@ jobs:
     - name: Test
       run: dotnet test ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --no-build
 
-    - name: Set Output
-      run: echo "should-run=${{ env.should_run }}" >> $GITHUB_ENV
-      id: set-output
-
   pack_and_publish:
     needs: [build_and_test]
-    if: needs.build_and_test.outputs.should-run == 'true'
+    if: success()
     runs-on: windows-latest
 
     steps:
