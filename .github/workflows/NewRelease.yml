@@ -37,3 +37,9 @@ jobs:
           version: ${{ env.VERSION }}
           verbose: 'verbose'
           github_token: ${{ secrets.PAT }}
+
+      - name: Run markdownlint-cli2-action
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: '**/*.md'
+          fix: true
