@@ -38,21 +38,6 @@ jobs:
       run: echo "::set-output name=should-run::true"
       id: set-output
 
-  project_operations:
-    needs: build_and_test
-    if: needs.build_and_test.outputs.should-run == 'true'
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Generate Release Notes from Milestone
-      uses: mod-posh/Issue2ReleaseNotes@v0.0.3.3
-      with:
-       milestone_number: ${{ github.event.milestone.number }}
-       verbose: 'verbose'
-       github_token: ${{ secrets.PAT }}
-
   pack_and_publish:
     needs: [build_and_test, project_operations]
     if: needs.build_and_test.outputs.should-run == 'true'
