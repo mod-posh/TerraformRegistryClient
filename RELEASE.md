@@ -1,33 +1,33 @@
-# TerraformRegistryClient Overview
+# Version 2.0.0
 
-The `TerraformRegistryClient` is a C# library designed to interact with the Terraform Registry API. It provides an easy-to-use interface for accessing various resources within the Terraform Registry, allowing developers to automate and manage their Terraform modules efficiently.
+This release marks a significant update from previous versions, introducing several key changes that enhance both the flexibility and usability of the library.
 
-## Key Features
+### Namespace Change:
+- **Updated Namespace:** The namespace has been changed from `ModPosh.TerraformRegistry` to `ModPosh.TerraformRegistryClient`. This update is intended to avoid potential conflicts with an upcoming PowerShell module that is currently in development. By renaming the namespace, we ensure clear separation between the core library and the PowerShell module, enabling smoother integration and usage across different projects.
 
-- **Module Listing**: Retrieve a list of Terraform modules available in the registry.
-- **Module Searching**: Search for specific modules using keywords.
-- **Version Listing**: Fetch a list of available versions for a specific module.
-- **Module Details**: Retrieve detailed information about a specific module, including its inputs, outputs, and dependencies.
+### Introduction of `TerraformRegistryConnectionInfo` Object:
+- **ConnectionInfo Object:** To streamline the process of establishing connections to the Terraform Registry API, this release introduces the `TerraformRegistryConnectionInfo` object. This object encapsulates connection-related details, such as the base API URL, allowing for a more modular and flexible configuration. The `TerraformRegistryConnectionInfo` object is now required when initializing the `Client` class, making it easier to manage and reuse connection settings across different instances and environments.
 
-## Supported Endpoints
+### Breaking Changes:
+- **Impact on Existing Code:** Due to the namespace change and the introduction of the `TerraformRegistryConnectionInfo` object, existing codebases that rely on previous versions of this library will need to be updated. Specifically:
+  - Update any references from `ModPosh.TerraformRegistry` to `ModPosh.TerraformRegistryClient`.
+  - Modify client initialization to use the new `TerraformRegistryConnectionInfo` object.
 
-- **List Modules**:
-  - Fetch a list of Terraform modules, optionally filtered by namespace, provider, or verification status.
+These changes are designed to provide a more robust and maintainable foundation for future development, ensuring that the library remains flexible and easy to integrate into a wide range of applications, including the forthcoming PowerShell module.
 
-- **Search Modules**:
-  - Search for modules in the Terraform Registry using a query string.
+## BUG
 
-- **List Module Versions**:
-  - Retrieve all versions available for a specific Terraform module.
+* issue-1: Namespace Conflict
 
-- **Get Module Details**:
-  - Obtain detailed information about a specific module, including its root configuration, submodules, and provider details.
+## ENHANCEMENT, WONTFIX
 
-- **Get Specific Module Version Details**:
-  - Retrieve detailed information for a specific version of a Terraform module.
+* issue-3: Implement Logger
 
-## Use Cases
+## DOCUMENTATION
 
-- Automating the retrieval and management of Terraform modules.
-- Integrating Terraform Registry data into CI/CD pipelines.
-- Enhancing infrastructure as code (IaC) workflows by programmatically interacting with the Terraform Registry.
+* issue-4: Update Documentation
+
+## ENHANCEMENT
+
+* issue-2: Implement a ConnectionInfo object
+
