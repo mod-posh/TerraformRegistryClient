@@ -15,7 +15,7 @@ jobs:
         id: get_version
         uses: mod-posh/GetProjectVersion@v0.0.2.2
         with:
-          Filename: 'SpnLibrary\SpnLibrary.psd1'
+          Filename: 'TerraformRegistryClient\TerraformRegistryClient.csproj'
           verbose: "verbose"
 
       - name: Create Release Notes

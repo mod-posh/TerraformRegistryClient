@@ -16,16 +16,19 @@ The `TerraformRegistryClient` is a C# library designed to interact with the Terr
 Below is an example of how to use the `TerraformRegistryClient` in your C# projects.
 
 ```csharp
-using ModPosh.TerraformRegistry;
-using ModPosh.Models;
+using ModPosh.TerraformRegistryClient;
+using ModPosh.TerraformRegistryClient.Models;
 using System.Threading.Tasks;
 
 class Program
 {
     static async Task Main(string[] args)
     {
-        // Create an instance of the client
-        var client = new Client();
+        // Create a ConnectionInfo object
+        var connectionInfo = new TerraformRegistryConnectionInfo("https://registry.terraform.io/v1/");
+
+        // Create an instance of the client with the connection info
+        var client = new Client(connectionInfo);
 
         // Example: List all modules in a specific namespace
         var modulesResponse = await client.ListModulesAsync(moduleNamespace: "hashicorp");
@@ -62,8 +65,11 @@ Below is an example of how to use the `TerraformRegistryClient` in your PowerShe
 2. Create an instance of the client and use its methods:
 
     ```powershell
-    # Create an instance of the Client class
-    $client = New-Object ModPosh.TerraformRegistry.Client
+    # Create a ConnectionInfo object
+    $connectionInfo = New-Object ModPosh.TerraformRegistryClient.TerraformRegistryConnectionInfo("https://registry.terraform.io/v1/")
+
+    # Create an instance of the Client class with the connection info
+    $client = New-Object ModPosh.TerraformRegistryClient.Client($connectionInfo)
 
     # Example: List all modules in a specific namespace
     $modulesResponse = $client.ListModulesAsync("hashicorp").Result
