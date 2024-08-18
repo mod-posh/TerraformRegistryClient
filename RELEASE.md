@@ -1,61 +1,32 @@
-# Version 2.1.0
+# Version 2.2.0
 
-### Version 2.1.0 Milestone: Enhanced Functionality and Improved Testing Support
+This release introduces enhancements to the `TerraformRegistryConnectionInfo` class, providing greater flexibility and simplifying usage. The key changes in this version are focused on improving the initialization process of the `TerraformRegistryConnectionInfo` object and updating the related unit tests to reflect these enhancements.
 
-This release focuses on further refining the library's capabilities, improving testability, and ensuring better compliance with modern C# practices. The changes in version 2.1.0 build on the foundation established in the previous release, adding new features and resolving issues to enhance the overall user experience.
+### Key Changes:
 
-### Key Updates:
+### Combined Constructor Logic for `TerraformRegistryConnectionInfo`
+- **Enhanced Constructor Behavior:** The `TerraformRegistryConnectionInfo` class now has a single constructor that accepts an optional `baseAddress` parameter. If the `baseAddress` is `null` or not provided, it defaults to the Terraform Registry API's default address (`https://registry.terraform.io/v1/`). This change simplifies the instantiation process and ensures a consistent default behavior without requiring multiple constructors.
+  
+  - **Previous Behavior:** The class had two constructors: one that required a `baseAddress` and another that provided the default base address. Passing a `null` value to the `baseAddress` parameter would have thrown an `ArgumentNullException`.
+  - **Current Behavior:** The class now handles a `null` `baseAddress` gracefully by automatically defaulting to the standard Terraform Registry API base address, reducing the likelihood of errors during instantiation.
 
-#### 1. **Integration of `IHttpClientFactory`:**
-   - **Enhanced Testability:** Introduced `IHttpClientFactory` support within the `Client` class constructors. This change allows for more flexible `HttpClient` management, particularly in unit tests, where mocking the `HttpClient` instance is now straightforward.
-   - **Constructor Overload:** Added a new constructor that accepts both `TerraformRegistryConnectionInfo` and `IHttpClientFactory`, providing developers with more control over `HttpClient` creation and lifetime management.
+### Updated Unit Tests
+- **Refactored Test Cases:** The unit tests for the `TerraformRegistryConnectionInfo` class have been updated to align with the new constructor behavior. The test that previously checked for an `ArgumentNullException` when a `null` base address was provided has been replaced with a test that verifies the use of the default base address in this scenario.
+  
+  - **New Test Scenarios:** 
+    - **Default Base Address Usage:** A new test ensures that when `null` is passed or when the constructor is called without parameters, the `TerraformRegistryConnectionInfo` correctly defaults to `https://registry.terraform.io/v1/`.
+    - **Custom Base Address:** The test for initializing the connection with a custom base address remains intact, confirming that the class correctly applies the provided value.
 
-#### 2. **Internal `HttpClient` Property Exposure:**
-   - **Internal Access with `[InternalsVisibleTo]`:** Marked the `HttpClient` property as internal, allowing access within the test project while maintaining encapsulation within the library. The `[InternalsVisibleTo("TerraformRegistryClient.Tests")]` attribute was added to facilitate this.
-   - **Test Project Improvements:** This change enables comprehensive testing of the `Client` class's internal workings, ensuring that the `HttpClient` is correctly initialized and behaves as expected.
+### Breaking Changes
+- **API Usage Impact:** The changes to the `TerraformRegistryConnectionInfo` constructor are not breaking in terms of API usage, but they do alter the expected behavior when a `null` value is passed. Users who previously relied on the exception being thrown when `null` was provided should update their code to reflect the new default behavior.
 
-#### 3. **Nullable Reference Types and Improved Null Handling:**
-   - **Nullable Annotations:** Applied nullable reference types (`string?`) in the `TerraformRegistryConnectionInfo` class to ensure safer handling of null values, aligning with modern C# practices.
-   - **Enhanced Error Handling:** Improved constructors and methods to handle potential null values more gracefully, preventing runtime errors and enhancing overall stability.
+### Summary
+This milestone continues to build on the improvements from previous versions by simplifying the API, reducing potential points of failure, and ensuring that the `TerraformRegistryConnectionInfo` class is more robust and easier to use. The updated unit tests further ensure that these changes are thoroughly validated, maintaining the library's high standards of reliability and usability.
 
-### Bug Fixes and Issue Resolutions:
-
-#### 4. **Assertion Method Corrections:**
-   - **Resolved NUnit Assertion Errors:** Addressed issues where certain NUnit assertion methods (`IsNotNull`, `AreEqual`) were not recognized due to incorrect casing or usage. Updated tests to use correct assertion methods, ensuring they execute as intended.
-
-#### 5. **Improved Error Messaging:**
-   - **Deserialization Error Handling:** Enhanced the `GetAsync<T>` method's error handling by providing more informative exception messages, particularly in cases where JSON deserialization fails or the API response is not as expected.
-
-### Documentation Updates:
-
-#### 6. **Enhanced XML Documentation:**
-   - **Comprehensive Coverage:** Expanded XML documentation across the `Client` and `TerraformRegistryConnectionInfo` classes, providing clearer guidance on usage and expected behavior. This documentation supports both developers and consumers of the library, ensuring better understanding and easier integration.
-
-#### 7. **Updated README:**
-   - **Reflecting New Features:** The README was updated to reflect the changes introduced in this version, including the new constructor options and the shift to nullable reference types. This ensures that users are aware of the new capabilities and how to leverage them effectively.
-
-### Conclusion:
-
-Version 2.1.0 represents a significant enhancement of the `TerraformRegistryClient` library, focusing on improving testability, stability, and developer experience. These updates lay the groundwork for more robust applications and provide a solid foundation for future enhancements.
-
-
-## BUG
-
-* issue-10: Improve Error Handling in GetAsync Method
-* issue-9: Fix NUnit Assertion Method Issues
 
 ## ENHANCEMENT
 
-* issue-8: Add Unit Tests
-* issue-7: Implement Nullable Reference Types in TerraformRegistryConnectionInfo
-* issue-6: Expose Internal HttpClient Property for Testing
-* issue-5: Enhance Testability with IHttpClientFactory Integration
-
-## DOCUMENTATION
-
-* issue-11: Update Documentation
-
-## NO LABEL
-
-* issue-12: V2.1.0
+* issue-15: V2.2.0
+* issue-14: TerraformRegistryConnectionInfoTests needs to change to account for change in TerraformRegistryConnectionInfo
+* issue-13: TerraformRegistryConnectionInfo should default to https://registry.terraform.io/v1/
 
