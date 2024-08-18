@@ -1,35 +1,61 @@
-# Version 2.0.0
+# Version 2.1.0
 
-This release marks a significant update from previous versions, introducing several key changes that enhance both the flexibility and usability of the library.
+### Version 2.1.0 Milestone: Enhanced Functionality and Improved Testing Support
 
-## Namespace Change
+This release focuses on further refining the library's capabilities, improving testability, and ensuring better compliance with modern C# practices. The changes in version 2.1.0 build on the foundation established in the previous release, adding new features and resolving issues to enhance the overall user experience.
 
-- **Updated Namespace:** The namespace has been changed from `ModPosh.TerraformRegistry` to `ModPosh.TerraformRegistryClient`. This update is intended to avoid potential conflicts with an upcoming PowerShell module that is currently in development. By renaming the namespace, we ensure clear separation between the core library and the PowerShell module, enabling smoother integration and usage across different projects.
+### Key Updates:
 
-## Introduction of `TerraformRegistryConnectionInfo` Object
+#### 1. **Integration of `IHttpClientFactory`:**
+   - **Enhanced Testability:** Introduced `IHttpClientFactory` support within the `Client` class constructors. This change allows for more flexible `HttpClient` management, particularly in unit tests, where mocking the `HttpClient` instance is now straightforward.
+   - **Constructor Overload:** Added a new constructor that accepts both `TerraformRegistryConnectionInfo` and `IHttpClientFactory`, providing developers with more control over `HttpClient` creation and lifetime management.
 
-- **ConnectionInfo Object:** To streamline the process of establishing connections to the Terraform Registry API, this release introduces the `TerraformRegistryConnectionInfo` object. This object encapsulates connection-related details, such as the base API URL, allowing for a more modular and flexible configuration. The `TerraformRegistryConnectionInfo` object is now required when initializing the `Client` class, making it easier to manage and reuse connection settings across different instances and environments.
+#### 2. **Internal `HttpClient` Property Exposure:**
+   - **Internal Access with `[InternalsVisibleTo]`:** Marked the `HttpClient` property as internal, allowing access within the test project while maintaining encapsulation within the library. The `[InternalsVisibleTo("TerraformRegistryClient.Tests")]` attribute was added to facilitate this.
+   - **Test Project Improvements:** This change enables comprehensive testing of the `Client` class's internal workings, ensuring that the `HttpClient` is correctly initialized and behaves as expected.
 
-## Breaking Changes
+#### 3. **Nullable Reference Types and Improved Null Handling:**
+   - **Nullable Annotations:** Applied nullable reference types (`string?`) in the `TerraformRegistryConnectionInfo` class to ensure safer handling of null values, aligning with modern C# practices.
+   - **Enhanced Error Handling:** Improved constructors and methods to handle potential null values more gracefully, preventing runtime errors and enhancing overall stability.
 
-- **Impact on Existing Code:** Due to the namespace change and the introduction of the `TerraformRegistryConnectionInfo` object, existing codebases that rely on previous versions of this library will need to be updated. Specifically:
-  - Update any references from `ModPosh.TerraformRegistry` to `ModPosh.TerraformRegistryClient`.
-  - Modify client initialization to use the new `TerraformRegistryConnectionInfo` object.
+### Bug Fixes and Issue Resolutions:
 
-These changes are designed to provide a more robust and maintainable foundation for future development, ensuring that the library remains flexible and easy to integrate into a wide range of applications, including the forthcoming PowerShell module.
+#### 4. **Assertion Method Corrections:**
+   - **Resolved NUnit Assertion Errors:** Addressed issues where certain NUnit assertion methods (`IsNotNull`, `AreEqual`) were not recognized due to incorrect casing or usage. Updated tests to use correct assertion methods, ensuring they execute as intended.
+
+#### 5. **Improved Error Messaging:**
+   - **Deserialization Error Handling:** Enhanced the `GetAsync<T>` method's error handling by providing more informative exception messages, particularly in cases where JSON deserialization fails or the API response is not as expected.
+
+### Documentation Updates:
+
+#### 6. **Enhanced XML Documentation:**
+   - **Comprehensive Coverage:** Expanded XML documentation across the `Client` and `TerraformRegistryConnectionInfo` classes, providing clearer guidance on usage and expected behavior. This documentation supports both developers and consumers of the library, ensuring better understanding and easier integration.
+
+#### 7. **Updated README:**
+   - **Reflecting New Features:** The README was updated to reflect the changes introduced in this version, including the new constructor options and the shift to nullable reference types. This ensures that users are aware of the new capabilities and how to leverage them effectively.
+
+### Conclusion:
+
+Version 2.1.0 represents a significant enhancement of the `TerraformRegistryClient` library, focusing on improving testability, stability, and developer experience. These updates lay the groundwork for more robust applications and provide a solid foundation for future enhancements.
+
 
 ## BUG
 
-- issue-1: Namespace Conflict
-
-## ENHANCEMENT, WONTFIX
-
-- issue-3: Implement Logger
+* issue-10: Improve Error Handling in GetAsync Method
+* issue-9: Fix NUnit Assertion Method Issues
 
 ## DOCUMENTATION
 
-- issue-4: Update Documentation
+* issue-11: Update Documentation
 
 ## ENHANCEMENT
 
-- issue-2: Implement a ConnectionInfo object
+* issue-8: Add Unit Tests
+* issue-7: Implement Nullable Reference Types in TerraformRegistryConnectionInfo
+* issue-6: Expose Internal HttpClient Property for Testing
+* issue-5: Enhance Testability with IHttpClientFactory Integration
+
+## NO LABEL
+
+* issue-12: V2.1.0
+
