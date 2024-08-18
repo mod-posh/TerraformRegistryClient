@@ -30,7 +30,7 @@ jobs:
       run: dotnet build ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --no-build --logger "xunit;LogFileName=test_results.xml"
+      run: dotnet test ${{ github.workspace }}/TerraformRegistryClient/TerraformRegistryClient.sln --configuration Release --no-build --logger "nunit;LogFileName=test_results.xml"
 
     - name: Publish Test Results
       if: always()
