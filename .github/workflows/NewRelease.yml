@@ -48,7 +48,7 @@ jobs:
         run: dotnet publish TerraformRegistryClient/TerraformRegistryClient.csproj --configuration Release --output ./publish
 
       - name: List Files in Publish Directory (Debug Step)
-        run: ls -R 
+        run: ls -R
 
       - name: Generate Documentation
         run: |
@@ -69,4 +69,4 @@ jobs:
           git add Docs/
           git commit -m "Update documentation for release v${{ env.VERSION }}"
           git push origin ${{ github.ref_name }}
-        if: success() && steps.generate-documentation.outputs.result == 'success'
+        if: success()
