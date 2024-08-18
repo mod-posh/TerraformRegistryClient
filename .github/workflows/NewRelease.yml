@@ -38,14 +38,14 @@ jobs:
           verbose: 'verbose'
           github_token: ${{ secrets.PAT }}
 
-      - name: Install DefaultDocumentation Tool
+      - name: Install XMLDocMD Tool
         run: dotnet tool install --global xmldocmd
 
       - name: Generate Documentation
         run: |
           xmldocmd "TerraformRegistryClient/bin/Release/net7.0/TerraformRegistryClient.dll" Docs
         env:
-          PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH
+          PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH:~/.dotnet/tools
 
       - name: Run markdownlint-cli2-action
         uses: DavidAnson/markdownlint-cli2-action@v16
