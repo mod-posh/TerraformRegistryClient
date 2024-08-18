@@ -47,12 +47,9 @@ jobs:
       - name: Publish Project
         run: dotnet publish TerraformRegistryClient/TerraformRegistryClient.csproj --configuration Release --output ./publish
 
-      - name: List Files in Publish Directory (Debug Step)
-        run: ls -R
-
       - name: Generate Documentation
         run: |
-          xmldocmd ./publish/TerraformRegistryClient.dll Docs
+          xmldocmd ./publish/TerraformRegistryClient.dll Docs --visibility private --clean --namespace ModPosh.TerraformRegistryClient --namespace-pages
         env:
           PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH:~/.dotnet/tools
 

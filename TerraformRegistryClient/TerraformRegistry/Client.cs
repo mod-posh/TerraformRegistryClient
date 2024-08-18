@@ -26,10 +26,17 @@ namespace ModPosh.TerraformRegistryClient
         /// <summary>
         /// Initializes a new instance of the <see cref="TerraformRegistryConnectionInfo"/> class.
         /// </summary>
-        /// <param name="baseAddress">The base address of the Terraform Registry API. If null, the default address is used.</param>
+        /// <param name="baseAddress">The base address of the Terraform Registry API. If null or empty, the default address is used.</param>
         public TerraformRegistryConnectionInfo(string? baseAddress = null)
         {
-            BaseAddress = baseAddress ?? "https://registry.terraform.io/v1/";
+            BaseAddress = string.IsNullOrWhiteSpace(baseAddress) ? "https://registry.terraform.io/v1/" : baseAddress;
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerraformRegistryConnectionInfo"/> class.
+        /// </summary>
+        public TerraformRegistryConnectionInfo()
+        {
+            BaseAddress = "https://registry.terraform.io/v1/";
         }
     }
     /// <summary>
