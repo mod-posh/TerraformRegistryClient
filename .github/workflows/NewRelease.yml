@@ -41,9 +41,12 @@ jobs:
       - name: Install XMLDocMD Tool
         run: dotnet tool install --global xmldocmd
 
+      - name: Build Project
+        run: dotnet build TerraformRegistryClient/TerraformRegistryClient.csproj --configuration Release
+
       - name: Generate Documentation
         run: |
-          xmldocmd "TerraformRegistryClient/bin/Release/net7.0/TerraformRegistryClient.dll" Docs
+          xmldocmd "${{ github.workspace }}/TerraformRegistryClient/bin/Release/net7.0/TerraformRegistryClient.dll" Docs
         env:
           PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH:~/.dotnet/tools
 
