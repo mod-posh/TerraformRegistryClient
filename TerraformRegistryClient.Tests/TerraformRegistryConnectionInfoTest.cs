@@ -7,23 +7,22 @@ namespace TerraformRegistryClient.Tests
     public class TerraformRegistryConnectionInfoTests
     {
         [Test]
-        public void Constructor_ShouldUseDefaultBaseAddress_WhenBaseAddressIsNull()
+        public void Constructor_ShouldUseDefaultBaseAddress_WhenBaseAddressIsNullOrEmpty()
         {
-            // Arrange
-            var expectedDefaultAddress = "https://registry.terraform.io/v1/";
-
             // Act
-            var connectionInfo = new TerraformRegistryConnectionInfo(null);
+            var connectionInfoNull = new TerraformRegistryConnectionInfo(null);
+            var connectionInfoEmpty = new TerraformRegistryConnectionInfo("");
 
             // Assert
-            Assert.That(connectionInfo.BaseAddress, Is.EqualTo(expectedDefaultAddress));
+            Assert.That(connectionInfoNull.BaseAddress, Is.EqualTo("https://registry.terraform.io/v1/"));
+            Assert.That(connectionInfoEmpty.BaseAddress, Is.EqualTo("https://registry.terraform.io/v1/"));
         }
 
         [Test]
         public void Constructor_ShouldInitializeBaseAddress_WhenValidAddressIsProvided()
         {
             // Arrange
-            var baseAddress = "https://custom.registry.url/v1/";
+            var baseAddress = "https://custom.url/v1/";
 
             // Act
             var connectionInfo = new TerraformRegistryConnectionInfo(baseAddress);
@@ -33,16 +32,13 @@ namespace TerraformRegistryClient.Tests
         }
 
         [Test]
-        public void Constructor_ShouldInitializeWithDefaultBaseAddress_WhenNoAddressIsProvided()
+        public void DefaultConstructor_ShouldUseDefaultBaseAddress()
         {
-            // Arrange
-            var expectedDefaultAddress = "https://registry.terraform.io/v1/";
-
             // Act
             var connectionInfo = new TerraformRegistryConnectionInfo();
 
             // Assert
-            Assert.That(connectionInfo.BaseAddress, Is.EqualTo(expectedDefaultAddress));
+            Assert.That(connectionInfo.BaseAddress, Is.EqualTo("https://registry.terraform.io/v1/"));
         }
     }
 }
