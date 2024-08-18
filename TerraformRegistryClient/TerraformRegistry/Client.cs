@@ -1,7 +1,10 @@
 ﻿using ModPosh.TerraformRegistryClient.Models;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("TerraformRegistryClient.Tests")]
 namespace ModPosh.TerraformRegistryClient
 {
     /// <summary>
@@ -27,7 +30,7 @@ namespace ModPosh.TerraformRegistryClient
         /// <exception cref="ArgumentNullException">
         /// Thrown when <paramref name="baseAddress"/> is null.
         /// </exception>
-        public TerraformRegistryConnectionInfo(string baseAddress)
+        public TerraformRegistryConnectionInfo(string? baseAddress)
         {
             BaseAddress = baseAddress ?? throw new ArgumentNullException(nameof(baseAddress));
         }
@@ -37,7 +40,7 @@ namespace ModPosh.TerraformRegistryClient
     /// </summary>
     public class Client
     {
-        private readonly HttpClient httpClient;
+        internal HttpClient httpClient { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class with the default base address.
@@ -73,6 +76,26 @@ namespace ModPosh.TerraformRegistryClient
                 BaseAddress = new Uri(baseAddress ?? "https://registry.terraform.io/v1/")
             };
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Client"/> class with the specified connection information and an <see cref="IHttpClientFactory"/>.
+        /// </summary>
+        /// <param name="connectionInfo">The connection information required to connect to the Terraform Registry API.</param>
+        /// <param name="httpClientFactory">The factory used to create an <see cref="HttpClient"/> instance.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="connectionInfo"/> or <paramref name="httpClientFactory"/> is null.
+        /// </exception>
+        public Client(TerraformRegistryConnectionInfo connectionInfo, IHttpClientFactory httpClientFactory)
+        {
+            if (connectionInfo == null)
+                throw new ArgumentNullException(nameof(connectionInfo));
+            if (httpClientFactory == null)
+                throw new ArgumentNullException(nameof(httpClientFactory));
+
+            this.httpClient = httpClientFactory.CreateClient();
+            this.httpClient.BaseAddress = new Uri(connectionInfo.BaseAddress);
+            this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         /// <summary>
