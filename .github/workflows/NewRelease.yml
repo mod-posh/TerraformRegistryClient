@@ -15,7 +15,7 @@ jobs:
         id: get_version
         uses: mod-posh/GetProjectVersion@v0.0.2.2
         with:
-          Filename: 'TerraformRegistryClient\TerraformRegistryClient.csproj'
+          Filename: 'TerraformRegistryClient/TerraformRegistryClient.csproj'
           verbose: "verbose"
 
       - name: Create Release Notes
@@ -38,8 +38,26 @@ jobs:
           verbose: 'verbose'
           github_token: ${{ secrets.PAT }}
 
+      - name: Install DefaultDocumentation Tool
+        run: dotnet tool install --global DefaultDocumentation
+
+      - name: Generate Documentation
+        run: |
+          defaultdocumentation -a "TerraformRegistryClient/bin/Release/net7.0/TerraformRegistryClient.dll" -o Docs
+        env:
+          PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH
+
       - name: Run markdownlint-cli2-action
         uses: DavidAnson/markdownlint-cli2-action@v16
         with:
           globs: '**/*.md'
           fix: true
+
+      - name: Commit Documentation Changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add Docs/
+          git commit -m "Update documentation for release v${{ env.VERSION }}"
+          git push origin ${{ github.ref_name }}
+        if: success() && steps.generate-documentation.outputs.result == 'success'
