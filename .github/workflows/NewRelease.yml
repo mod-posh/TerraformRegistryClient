@@ -41,6 +41,9 @@ jobs:
       - name: Install XMLDocMD Tool
         run: dotnet tool install --global xmldocmd
 
+      - name: Publish Project
+        run: dotnet publish TerraformRegistryClient/TerraformRegistryClient.csproj --configuration Release --output ./publish
+
       - name: Build Project
         run: dotnet build TerraformRegistryClient/TerraformRegistryClient.csproj --configuration Release
 
