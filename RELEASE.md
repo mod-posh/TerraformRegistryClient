@@ -44,16 +44,16 @@ Version 2.1.0 represents a significant enhancement of the `TerraformRegistryClie
 * issue-10: Improve Error Handling in GetAsync Method
 * issue-9: Fix NUnit Assertion Method Issues
 
-## DOCUMENTATION
-
-* issue-11: Update Documentation
-
 ## ENHANCEMENT
 
 * issue-8: Add Unit Tests
 * issue-7: Implement Nullable Reference Types in TerraformRegistryConnectionInfo
 * issue-6: Expose Internal HttpClient Property for Testing
 * issue-5: Enhance Testability with IHttpClientFactory Integration
+
+## DOCUMENTATION
+
+* issue-11: Update Documentation
 
 ## NO LABEL
 
