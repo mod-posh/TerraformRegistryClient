@@ -49,7 +49,7 @@ jobs:
 
       - name: Generate Documentation
         run: |
-          xmldocmd "${{ github.workspace }}/TerraformRegistryClient/bin/Release/net7.0/publish/TerraformRegistryClient.dll" "${{ github.workspace }}/Docs"
+          xmldocmd TerraformRegistryClient/bin/Release/net7.0/publish/TerraformRegistryClient.dll Docs
         env:
           PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH:~/.dotnet/tools
 
