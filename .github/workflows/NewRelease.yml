@@ -39,11 +39,11 @@ jobs:
           github_token: ${{ secrets.PAT }}
 
       - name: Install DefaultDocumentation Tool
-        run: dotnet tool install --global DefaultDocumentation
+        run: dotnet tool install --global xmldocmd
 
       - name: Generate Documentation
         run: |
-          defaultdocumentation -a "TerraformRegistryClient/bin/Release/net7.0/TerraformRegistryClient.dll" -o Docs
+          xmldocmd "TerraformRegistryClient/bin/Release/net7.0/TerraformRegistryClient.dll" Docs
         env:
           PATH: ${{ github.runner.tool_cache }}/.dotnet/tools:$PATH
 
